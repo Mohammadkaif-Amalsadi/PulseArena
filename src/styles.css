@@ -27,6 +27,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: hidden;
   font-family: "Rajdhani", sans-serif;
   color: var(--text);
   background:
@@ -126,6 +127,7 @@ a {
 .dashboard {
   width: min(1240px, calc(100% - 28px));
   margin: 0 auto;
+  min-width: 0;
 }
 
 .navbar {
@@ -185,6 +187,7 @@ a {
   gap: 24px;
   align-items: end;
   margin-bottom: 22px;
+  min-width: 0;
 }
 
 .label,
@@ -272,6 +275,7 @@ a {
   gap: 20px;
   align-items: end;
   margin-bottom: 18px;
+  min-width: 0;
 }
 
 .hero-intro h2,
@@ -304,6 +308,7 @@ a {
 .launcher-shell {
   display: grid;
   gap: 18px;
+  min-width: 0;
 }
 
 .launcher-stage {
@@ -311,6 +316,7 @@ a {
   grid-template-columns: 180px minmax(0, 1fr) 180px;
   gap: 14px;
   align-items: center;
+  min-width: 0;
 }
 
 .stage-side {
@@ -508,6 +514,7 @@ a {
     linear-gradient(180deg, color-mix(in srgb, var(--theme-secondary) 6%, transparent), color-mix(in srgb, var(--theme-primary) 5%, transparent)),
     rgba(7, 13, 24, 0.74);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  min-width: 0;
 }
 
 .selector-head,
@@ -546,6 +553,7 @@ a {
     linear-gradient(90deg, color-mix(in srgb, var(--theme-primary) 10%, transparent), transparent 45%),
     rgba(255, 255, 255, 0.035);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  min-width: 0;
 }
 
 .summary-title {
@@ -579,6 +587,7 @@ a {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.045);
   font-size: 0.95rem;
+  max-width: 100%;
 }
 
 .launch,
@@ -686,6 +695,7 @@ a {
 .feature-section {
   display: grid;
   gap: 18px;
+  min-width: 0;
 }
 
 .browse-grid,
@@ -693,6 +703,7 @@ a {
 .ttt-grid {
   display: grid;
   gap: 22px;
+  min-width: 0;
 }
 
 .browse-grid {
@@ -993,7 +1004,8 @@ a {
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  align-items: center;
+  align-items: stretch;
+  flex-wrap: wrap;
   padding: 24px;
 }
 
@@ -1009,6 +1021,7 @@ a {
 .contact-card a {
   font-family: "Orbitron", sans-serif;
   font-size: 1rem;
+  overflow-wrap: anywhere;
 }
 
 @keyframes blink {
@@ -1086,8 +1099,19 @@ a {
 
   .navbar {
     border-radius: 24px;
-    align-items: start;
+    align-items: stretch;
     flex-direction: column;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-links a,
+  .nav-links button {
+    text-align: center;
+    flex: 1 1 auto;
   }
 
   .hero-stage,
@@ -1103,6 +1127,15 @@ a {
 
   .topbar h1 {
     max-width: 14ch;
+  }
+
+  .topbar-copy,
+  .hero-intro p,
+  .section-heading p,
+  .page-hero p,
+  .selected-summary p,
+  .swipe-hint {
+    max-width: 100%;
   }
 
   .launcher-stage {
@@ -1128,8 +1161,24 @@ a {
     width: 100%;
   }
 
+  .selected-summary {
+    padding: 12px;
+  }
+
+  .summary-title strong {
+    font-size: 1.08rem;
+  }
+
   .card-rail.compact {
-    grid-auto-columns: 84%;
+    grid-auto-columns: minmax(240px, 84%);
+  }
+
+  .game-card {
+    min-width: 0;
+  }
+
+  .browse-media {
+    min-height: 220px;
   }
 
   .movement-hint {
@@ -1148,5 +1197,10 @@ a {
   .pad-button {
     width: 52px;
     height: 52px;
+  }
+
+  .contact-shell {
+    grid-template-columns: 1fr;
+    display: grid;
   }
 }

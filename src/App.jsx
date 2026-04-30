@@ -324,10 +324,15 @@ function HomePage({ selectedIndex, onSelect, onOpenRoute }) {
     const normalizedIndex = (nextIndex + games.length) % games.length;
     onSelect(normalizedIndex);
     if (shouldScroll && cardsRef.current?.children[normalizedIndex]) {
-      cardsRef.current.children[normalizedIndex].scrollIntoView({
-        behavior: "smooth",
-        inline: "center",
-        block: "nearest"
+      const rail = cardsRef.current;
+      const card = rail.children[normalizedIndex];
+      const railCenter = rail.clientWidth / 2;
+      const cardCenter = card.offsetLeft + card.clientWidth / 2;
+      const nextScrollLeft = Math.max(0, cardCenter - railCenter);
+
+      rail.scrollTo({
+        left: nextScrollLeft,
+        behavior: "smooth"
       });
     }
   };
@@ -1039,6 +1044,16 @@ function ContactSection() {
         <div className="contact-card">
           <span>Email</span>
           <a href="mailto:amalsadikaif98@gmail.com">amalsadikaif98@gmail.com</a>
+        </div>
+        <div className="contact-card">
+          <span>Phone</span>
+          <a href="tel:+919773279670">+91 97732 79670</a>
+        </div>
+        <div className="contact-card">
+          <span>GitHub</span>
+          <a href="https://github.com/Mohammadkaif-Amalsadi/PulseArena" target="_blank" rel="noreferrer">
+            github.com/Mohammadkaif-Amalsadi/PulseArena
+          </a>
         </div>
       </div>
     </section>

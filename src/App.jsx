@@ -321,8 +321,20 @@ function HomePage({ selectedIndex, onSelect, onOpenRoute }) {
   }, [selectedIndex]);
 
   const jumpToCard = (nextIndex, shouldScroll = true) => {
+    const lockedScrollY = window.scrollY;
     const normalizedIndex = (nextIndex + games.length) % games.length;
     onSelect(normalizedIndex);
+
+    window.requestAnimationFrame(() => {
+      if (window.scrollY !== lockedScrollY) {
+        window.scrollTo({
+          top: lockedScrollY,
+          left: window.scrollX,
+          behavior: "instant"
+        });
+      }
+    });
+
     if (shouldScroll && cardsRef.current?.children[normalizedIndex]) {
       const rail = cardsRef.current;
       const card = rail.children[normalizedIndex];
@@ -373,7 +385,13 @@ function HomePage({ selectedIndex, onSelect, onOpenRoute }) {
             }}
             onTouchEnd={handleSwipeEnd}
           >
-            <button type="button" className="stage-side side-left" onClick={() => jumpToCard(selectedIndex - 1)} aria-label={`Previous game: ${previousGame.title}`}>
+            <button
+              type="button"
+              className="stage-side side-left"
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={() => jumpToCard(selectedIndex - 1)}
+              aria-label={`Previous game: ${previousGame.title}`}
+            >
               <img src={previousGame.poster} alt={previousGame.title} className="side-poster" loading="lazy" />
               <div className="side-shade" />
               <div className="side-copy">
@@ -418,7 +436,13 @@ function HomePage({ selectedIndex, onSelect, onOpenRoute }) {
               </div>
             </div>
 
-            <button type="button" className="stage-side side-right" onClick={() => jumpToCard(selectedIndex + 1)} aria-label={`Next game: ${nextGame.title}`}>
+            <button
+              type="button"
+              className="stage-side side-right"
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={() => jumpToCard(selectedIndex + 1)}
+              aria-label={`Next game: ${nextGame.title}`}
+            >
               <img src={nextGame.poster} alt={nextGame.title} className="side-poster" loading="lazy" />
               <div className="side-shade" />
               <div className="side-copy">
@@ -469,6 +493,7 @@ function HomePage({ selectedIndex, onSelect, onOpenRoute }) {
                   type="button"
                   className={`game-card compact ${index === selectedIndex ? "active" : ""}`}
                   style={{ backgroundImage: `linear-gradient(180deg, transparent, rgba(3, 7, 16, 0.92)), url(${game.cardImage})` }}
+                  onMouseDown={(event) => event.preventDefault()}
                   onClick={() => jumpToCard(index)}
                 >
                   <span className="game-card-chip">{game.tag}</span>
@@ -484,6 +509,7 @@ function HomePage({ selectedIndex, onSelect, onOpenRoute }) {
                   key={game.id}
                   type="button"
                   className={`dot ${index === selectedIndex ? "active" : ""}`}
+                  onMouseDown={(event) => event.preventDefault()}
                   onClick={() => jumpToCard(index)}
                   aria-label={`Select ${game.title}`}
                 />

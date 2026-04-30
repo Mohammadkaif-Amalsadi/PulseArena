@@ -427,11 +427,12 @@ a {
 }
 
 .stage-ribbon {
-  padding: 5px 14px;
+  padding: 6px 14px;
   border-radius: 999px;
   background: linear-gradient(180deg, #aaff7a, #57c42e);
   color: #0d1307;
   font-weight: 700;
+  box-shadow: 0 10px 24px rgba(87, 196, 46, 0.22);
 }
 
 .stage-badges {
@@ -443,7 +444,7 @@ a {
 
 .team-badge.dynamic-badge {
   padding: 6px 10px;
-  border-radius: 8px;
+  border-radius: 999px;
   background: linear-gradient(135deg, color-mix(in srgb, var(--theme-secondary) 80%, white 14%), color-mix(in srgb, var(--theme-primary) 74%, white 10%));
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -475,13 +476,20 @@ a {
   padding: 28px;
 }
 
+.video-copy-head {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
 .chip {
   display: inline-flex;
-  margin-bottom: 14px;
+  justify-self: start;
   padding: 8px 12px;
   border-radius: 999px;
   background: color-mix(in srgb, var(--theme-primary) 20%, transparent);
   border: 1px solid color-mix(in srgb, var(--theme-primary) 45%, transparent);
+  backdrop-filter: blur(8px);
 }
 
 .video-copy h2 {
@@ -605,6 +613,14 @@ a {
   padding: 0 18px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
+}
+
+.launch:disabled,
+.ghost:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
 .launch {
@@ -739,6 +755,10 @@ a {
   display: grid;
   gap: 14px;
   padding: 18px;
+}
+
+.muted-card {
+  opacity: 0.92;
 }
 
 .arena-grid,
@@ -1000,6 +1020,46 @@ a {
   justify-content: start;
 }
 
+.portfolio-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 22px;
+}
+
+.portfolio-video-shell,
+.portfolio-copy {
+  padding: 20px;
+}
+
+.portfolio-video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.portfolio-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.portfolio-pill {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.portfolio-list {
+  margin: 16px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
 .contact-shell {
   display: flex;
   justify-content: space-between;
@@ -1068,6 +1128,10 @@ a {
   }
 
   .browse-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-layout {
     grid-template-columns: 1fr;
   }
 
@@ -1151,6 +1215,54 @@ a {
     min-height: 320px;
   }
 
+  .stage-topbar {
+    inset: 8px 8px auto 8px;
+    gap: 6px;
+  }
+
+  .stage-ribbon {
+    padding: 5px 12px;
+    font-size: 0.68rem;
+  }
+
+  .stage-badges {
+    gap: 6px;
+  }
+
+  .team-badge.dynamic-badge {
+    padding: 5px 8px;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+  }
+
+  .video-copy {
+    padding: 16px;
+  }
+
+  .video-copy-head {
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .video-copy h2 {
+    font-size: clamp(1.6rem, 8vw, 2.25rem);
+    line-height: 1.02;
+  }
+
+  .video-copy p {
+    font-size: 0.95rem;
+  }
+
+  .video-meta {
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .video-meta span {
+    padding: 7px 10px;
+    font-size: 0.88rem;
+  }
+
   .selector-head {
     flex-direction: column;
     align-items: start;
@@ -1175,6 +1287,14 @@ a {
 
   .game-card {
     min-width: 0;
+  }
+
+  .selector-shell,
+  .ttt-shell,
+  .ttt-sidebar,
+  .portfolio-video-shell,
+  .portfolio-copy {
+    padding: 16px;
   }
 
   .browse-media {

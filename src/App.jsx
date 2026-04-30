@@ -17,7 +17,8 @@ const games = [
     surface: "rgba(8, 16, 34, 0.86)",
     howToPlayLabel: "How To Play",
     howToPlayBadges: ["Collect blue points", "Avoid red danger", "Unlock pattern 2"],
-    route: "grid"
+    route: "grid",
+    implemented: true
   },
   {
     id: "ember-ttt",
@@ -35,7 +36,8 @@ const games = [
     surface: "rgba(25, 14, 28, 0.86)",
     howToPlayLabel: "How To Play",
     howToPlayBadges: ["Place 3 active marks", "4th move removes oldest", "Beat adaptive AI"],
-    route: "ttt"
+    route: "ttt",
+    implemented: true
   },
   {
     id: "skyline-ops",
@@ -53,7 +55,8 @@ const games = [
     surface: "rgba(10, 18, 36, 0.86)",
     howToPlayLabel: "How To Play",
     howToPlayBadges: ["Swipe through cards", "Preview each world", "Open linked mode"],
-    route: "grid"
+    route: "grid",
+    implemented: false
   },
   {
     id: "wild-loop",
@@ -71,7 +74,8 @@ const games = [
     surface: "rgba(20, 12, 35, 0.86)",
     howToPlayLabel: "How To Play",
     howToPlayBadges: ["Preview themed content", "Switch color systems", "Jump into games"],
-    route: "ttt"
+    route: "ttt",
+    implemented: false
   }
 ];
 
@@ -89,7 +93,7 @@ const WIN_LINES = [
 
 function getRouteFromHash() {
   const hash = window.location.hash.replace(/^#\/?/, "");
-  return hash === "grid" || hash === "ttt" ? hash : "home";
+  return hash === "grid" || hash === "ttt" || hash === "portfolio" ? hash : "home";
 }
 
 function buildPattern(rows, cols, patternNumber) {
@@ -279,6 +283,7 @@ function Navbar({ route, navigate }) {
       <button type="button" className="brandmark-button" onClick={() => navigate("home")}>Pulse Arena</button>
       <div className="nav-links">
         <button type="button" onClick={() => navigate("home")} className={route === "home" ? "active" : ""}>Home</button>
+        <button type="button" onClick={() => navigate("portfolio")} className={route === "portfolio" ? "active" : ""}>Portfolio</button>
         <a href="#contact-zone">Contact</a>
       </div>
     </nav>
@@ -425,8 +430,10 @@ function HomePage({ selectedIndex, onSelect, onOpenRoute }) {
               />
               <div className="video-mask" />
               <div className="video-copy">
-                <span className="chip" style={{ "--chip-accent": selectedGame.accent }}>{selectedGame.tag}</span>
-                <h2>{selectedGame.title}</h2>
+                <div className="video-copy-head">
+                  <span className="chip" style={{ "--chip-accent": selectedGame.accent }}>{selectedGame.tag}</span>
+                  <h2>{selectedGame.title}</h2>
+                </div>
                 <p>{selectedGame.description}</p>
                 <div className="video-meta">
                   <span>{selectedGame.genre}</span>
@@ -459,8 +466,13 @@ function HomePage({ selectedIndex, onSelect, onOpenRoute }) {
                 <p className="label">Game Switcher</p>
                 <h3>Select a title and launch preview</h3>
               </div>
-              <button type="button" className="launch launch-large" onClick={() => onOpenRoute(selectedGame.route)}>
-                Open Game Page
+              <button
+                type="button"
+                className="launch launch-large"
+                onClick={() => selectedGame.implemented && onOpenRoute(selectedGame.route)}
+                disabled={!selectedGame.implemented}
+              >
+                {selectedGame.implemented ? "Open Game Page" : "Coming Soon"}
               </button>
             </div>
 
@@ -541,6 +553,19 @@ function HomePage({ selectedIndex, onSelect, onOpenRoute }) {
               <div className="browse-copy">
                 <p>{game.description}</p>
                 <button type="button" className="launch" onClick={() => onOpenRoute(game.route)}>Open {game.title}</button>
+              </div>
+            </article>
+          ))}
+          {games.slice(2).map((game) => (
+            <article key={game.id} className="browse-card panel muted-card" style={{ "--browse-accent": game.accent }}>
+              <div className="browse-media" style={{ backgroundImage: `linear-gradient(180deg, transparent, rgba(4, 8, 18, 0.92)), url(${game.poster})` }}>
+                <span className="browse-tag">{game.tag}</span>
+                <h3>{game.title}</h3>
+                <p>{game.genre}</p>
+              </div>
+              <div className="browse-copy">
+                <p>{game.description}</p>
+                <button type="button" className="ghost" disabled>Dedicated page coming soon</button>
               </div>
             </article>
           ))}
@@ -1058,6 +1083,71 @@ function TicTacToePage({ navigate }) {
   );
 }
 
+function PortfolioPage({ navigate }) {
+  return (
+    <>
+      <section className="page-hero panel">
+        <div>
+          <p className="label">Portfolio</p>
+          <h2>2D MMORPG prototype inspired by Pokemon</h2>
+          <p>
+            A Unity 2D game project focused on multiplayer world systems, explorable routes, sprite-driven environments,
+            and atmosphere through music and map progression.
+          </p>
+        </div>
+        <button type="button" className="ghost" onClick={() => navigate("home")}>Back To Home</button>
+      </section>
+
+      <section className="feature-section">
+        <div className="section-heading">
+          <div>
+            <p className="label">Project Showcase</p>
+            <h2>MMORPG creation video</h2>
+          </div>
+          <p>
+            This project is still under development. The current build focuses on core world-building systems and the multiplayer foundation rather than a final polished release.
+          </p>
+        </div>
+
+        <div className="portfolio-layout">
+          <section className="panel portfolio-video-shell">
+            <video
+              className="portfolio-video"
+              src="/assets/videos/creation.mp4"
+              controls
+              playsInline
+              preload="metadata"
+            />
+          </section>
+
+          <aside className="panel portfolio-copy">
+            <div className="portfolio-pill-row">
+              <span className="portfolio-pill">Unity 2D</span>
+              <span className="portfolio-pill">MMORPG Prototype</span>
+              <span className="portfolio-pill">In Development</span>
+            </div>
+
+            <p>
+              I created a 2D MMORPG-style game inspired by the exploration and progression loop of Pokemon, using Unity 2D as the core engine. The project includes multiplayer handling, sprite-based environments, custom routes, map flow, and music-driven atmosphere to make the world feel connected and alive.
+            </p>
+            <p>
+              The current focus has been on building the technical and world-design foundation: player movement across routes, scene and map setup, multiplayer synchronization work, sprite pipelines, and overall game feel. It is still under active development, and the video below represents the ongoing progress rather than a final production-ready version.
+            </p>
+            <ul className="portfolio-list">
+              <li>Multiplayer handling and early online gameplay structure</li>
+              <li>2D sprites, routes, and explorable map setup</li>
+              <li>Music integration for world feel and progression tone</li>
+              <li>Project still under development with more systems planned</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <ContactSection />
+    </>
+  );
+}
+
 function ContactSection() {
   return (
     <section id="contact-zone" className="feature-section">
@@ -1110,6 +1200,12 @@ function App() {
       ? games.find((game) => game.route === "grid")
       : route === "ttt"
         ? games.find((game) => game.route === "ttt")
+        : route === "portfolio"
+          ? {
+              accent: "#8fd6ff",
+              accentSecondary: "#c17cff",
+              surface: "rgba(12, 16, 34, 0.88)"
+            }
         : selectedGame;
 
   return (
@@ -1137,7 +1233,9 @@ function App() {
             ? "A polished game hub with a swipeable launcher, clearer home page, dedicated playable pages, and card-driven theme shifts."
             : route === "grid"
               ? "A dynamic grid challenge with scalable layouts, player movement, timer pressure, and automatic Pattern 2 progression."
-              : "A tactical tic tac toe twist where the fourth active mark makes the oldest one blink before vanishing."}
+              : route === "ttt"
+                ? "A tactical tic tac toe twist where the fourth active mark makes the oldest one blink before vanishing."
+                : "A portfolio page for an in-development Unity 2D MMORPG project, with creation footage and production details."}
         </p>
       </header>
 
@@ -1145,6 +1243,7 @@ function App() {
         {route === "home" && <HomePage selectedIndex={selectedIndex} onSelect={setSelectedIndex} onOpenRoute={navigate} />}
         {route === "grid" && <GridPage navigate={navigate} />}
         {route === "ttt" && <TicTacToePage navigate={navigate} />}
+        {route === "portfolio" && <PortfolioPage navigate={navigate} />}
       </main>
     </div>
   );

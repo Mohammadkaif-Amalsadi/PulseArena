@@ -1139,6 +1139,16 @@ function PortfolioPage({ navigate }) {
               <li>Music integration for world feel and progression tone</li>
               <li>Project still under development with more systems planned</li>
             </ul>
+
+            <div className="portfolio-actions">
+              <a
+                className="launch portfolio-download"
+                href="/assets/files/MohammadKaifNavsari.pdf"
+                download="MohammadKaifNavsari.pdf"
+              >
+                Download Resume
+              </a>
+            </div>
           </aside>
         </div>
       </section>

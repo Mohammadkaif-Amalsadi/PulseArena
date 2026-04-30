@@ -1060,6 +1060,17 @@ a {
   line-height: 1.6;
 }
 
+.portfolio-actions {
+  margin-top: 20px;
+}
+
+.portfolio-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .contact-shell {
   display: flex;
   justify-content: space-between;
